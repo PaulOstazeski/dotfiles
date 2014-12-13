@@ -197,6 +197,8 @@ autocmd FileType clojure map ,, :Dispatch lein test<cr>
 "Avoids error 'crontab: temp file must be edited in place'
 autocmd FileType crontab set backupskip=/tmp/*,/private/tmp/*
 
+autocmd FileType go set tabstop=2|set shiftwidth=2|set noexpandtab|set nolist
+
 function! ResCur()
   if line("'\"") <= line("$")
     normal! g`"
