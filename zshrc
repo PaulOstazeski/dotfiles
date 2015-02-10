@@ -256,3 +256,8 @@ function man () {
 
 eval "$(fasd --init auto)"
 [[ -s "/Users/postazeski/.gvm/scripts/gvm" ]] && source "/Users/postazeski/.gvm/scripts/gvm"
+
+function vm_ip() { arp -a | awk '/de:ad:be:ef/ {gsub(/[()]/, "", $2); print $2}' | head -n 1 }
+function try_to_connect_to_vm() { ssh -A postazeski@$(vm_ip) }
+function remove_old_vm_key() { ssh-keygen -R $(vm_ip) }
+function connect_vm() { try_to_connect_to_vm || remove_old_vm_key && try_to_connect_to_vm }
