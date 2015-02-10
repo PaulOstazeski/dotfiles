@@ -37,7 +37,7 @@
   default         = current
 [github]
   user            = PaulOstazeski
-  token           = 9c35f01e0cef9780a17e5076c0c64861
+  token           = ThisIsNotMyToken
 [init]
   templatedir     = ~/.git_template
 [remote "origin"]
