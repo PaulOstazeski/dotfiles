@@ -188,6 +188,7 @@ autocmd BufRead Capfile,Gemfile,Rakefile,Guardfile,Procfile,Vagrantfile,Berksfil
 autocmd FileType ruby map ,, :Dispatch bundle exec rspec spec<cr>
 autocmd FileType go map ,, :Dispatch go run %<cr>
 autocmd FileType clojure map ,, :Dispatch lein test<cr>
+autocmd BufRead,BufNewFile *.cljx setlocal filetype=clojure
 
 
 "Fix cron on OSX
@@ -230,20 +231,13 @@ autocmd! BufReadPost gitcommit
 autocmd FileType gitcommit setlocal spell spelllang=en_us
 autocmd FileType gitcommit DiffGitCached | wincmd L
 
-" Protect large files from sourcing and other overhead.
-" Files become read only
-if !exists("my_auto_commands_loaded")
-  let my_auto_commands_loaded = 1
-  " Large files are > 10M
-  " Set options:
-  " eventignore+=FileType (no syntax highlighting etc
-  " assumes FileType always on)
-  " noswapfile (save copy of file)
-  " bufhidden=unload (save memory when other file is viewed)
-  " buftype=nowritefile (is read-only)
-  " undolevels=-1 (no undo possible)
-  let g:LargeFile = 1024 * 1024 * 10
-  augroup LargeFile
-    autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:LargeFile | set eventignore+=FileType | setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 | else | set eventignore-=FileType | endif
-    augroup END
+function! VerticalSplitWithUnitTestFile()
+  let s:this_file = expand("%:r")
+  if s:this_file =~ "^src"
+    let s:alternate_file = expand("%:r:s!src!test!") . "_test." . expand("%:e")
+  elseif s:this_file =~ "^test"
+    let s:alternate_file = expand("%:r:s!test!src!:s!_test!!") . "." . expand("%:e")
   endif
+  execute "vs" s:alternate_file
+endfunction
+autocmd FileType clojure map ,a :call VerticalSplitWithUnitTestFile()<cr>
