@@ -42,3 +42,4 @@
   templatedir     = ~/.git_template
 [remote "origin"]
 	prune = true
+	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
