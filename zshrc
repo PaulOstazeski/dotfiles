@@ -255,5 +255,4 @@ function man () {
           man "$@"
 }
 
-# eval "$(fasd --init auto)"
-# [[ -s "/Users/postazeski/.gvm/scripts/gvm" ]] && source "/Users/postazeski/.gvm/scripts/gvm"
+eval "$(fasd --init auto)"

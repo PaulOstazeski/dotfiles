@@ -40,7 +40,7 @@ Bundle 'fatih/vim-go'
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'guns/vim-clojure-static'
 Bundle 'tpope/vim-fireplace'
-Plugin 'paredit.vim'
+" Plugin 'paredit.vim'
 Plugin 'rainbow_parentheses.vim'
 Plugin 'jpalardy/vim-slime'
 let g:slime_target = "tmux"
