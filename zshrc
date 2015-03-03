@@ -149,6 +149,7 @@ alias bil="bi --local"
 alias bu="b update"
 alias be="b exec"
 alias binit="bi && b package --all && echo 'vendor/ruby' >> .gitignore"
+alias battery='cat /sys/class/power_supply/BAT1/{status,capacity} | tr "\n" " "'
 
 t ()
 {
