@@ -3,6 +3,7 @@ typeset -A files
 files=(.vim vim
        .vimrc vim/vimrc
        .gvimrc vim/gvimrc
+       .inputrc inputrc
        .tmux.conf tmux.conf
        .zshrc zshrc
        .zshenv zshenv
