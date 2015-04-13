@@ -1,4 +1,4 @@
 set editing-mode vi
 set bell-style visible
-set keymap vi-move
+set keymap vi-insert
 
