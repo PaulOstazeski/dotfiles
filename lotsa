@@ -38,4 +38,4 @@ do
   esac
 done
 
-setup_panes
+[[ ! -z "$SERVERS" ]] && setup_panes
