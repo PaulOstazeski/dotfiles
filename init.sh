@@ -9,6 +9,7 @@ files=(.vim vim
        .zshenv zshenv
        .gitconfig gitconfig
        .psqlrc psqlrc
+       lotsa lotsa
        .git_template git_template
        .lein lein)
 

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+function setup_panes(){
+  tmux new-window
+  for server in ${SERVERS[@]}
+  do
+    tmux splitw "ssh $server"
+    if [ ! -z "$REMOTE_COMMAND" ]
+    then
+      tmux send-keys "$REMOTE_COMMAND" Enter
+    fi
+  done
+  tmux send-keys -t 0 "exit" Enter
+  sleep 0.2
+  tmux select-layout tiled
+  tmux set-option synchronize-panes on
+}
+
+while getopts ":h:s:c:" flag
+do
+  case $flag in
+    s)
+      SERVERS+=($OPTARG);;
+    c)
+      REMOTE_COMMAND=$OPTARG;;
+    h)
+      echo "USAGE: $0"
+      exit 0
+      ;;
+    :)
+      echo "Option -$OPTARG requires a value"
+      exit 1
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG"
+      exit 1
+      ;;
+  esac
+done
+
+setup_panes
