@@ -43,3 +43,5 @@
 [remote "origin"]
 	prune = true
 	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+[status]
+	showUntrackedFiles = all
