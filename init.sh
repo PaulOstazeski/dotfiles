@@ -1,12 +1,13 @@
 #!/bin/zsh
 typeset -A files
-files=(.vim vim .vimrc vim/vimrc .gvimrc vim/gvimrc .tmux.conf tmux.conf .zshrc zshrc .zshenv zshenv .gitconfig gitconfig .psqlrc psqlrc .git_template git_template)
+files=(.vim vim .vimrc vim/vimrc .tmux.conf tmux.conf .zshrc zshrc .zshenv zshenv .gitconfig gitconfig .psqlrc psqlrc .git_template git_template)
 
 for dotfile sourcefile in ${(kv)files}
 do
   if [ -e ~/${dotfile} ]
   then
-    rm -f ~/${dotfile}
+    mkdir -p original_rc_files
+    mv -v ~/${dotfile} original_rc_files/
   fi
   ln -s ~/.dotfiles/${sourcefile} ~/${dotfile}
 done
