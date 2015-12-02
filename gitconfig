@@ -26,22 +26,24 @@
   conflictstyle      = diff3
   tool               = vimdiff
 [alias]
-  lg                 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)%an%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  co                 = checkout
-  st                 = status
-  br                 = branch
-  ci                 = commit
-  ap                 = add -p
-  cp                 = cherry-pick
+  lg              = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)%an%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  co              = checkout
+  st              = status -sb
+  br              = branch
+  ci              = commit
+  ap              = add -p
+  cp              = cherry-pick
 [push]
   default            = current
 [github]
   user               = PaulOstazeski
   token              = ThisIsNotMyToken
 [init]
-  templatedir        = ~/.git_template
+  templatedir     = ~/.git_template
+[commit]
+  template        = ~/.git_template/message
 [remote "origin"]
-  prune              = true
-  fetch              = +refs/pull/*/head:refs/remotes/origin/pr/*
+  prune = true
+  fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
 [status]
   showUntrackedFiles = all

@@ -14,7 +14,7 @@ function running_linux() {
   uname -a | grep -qi linux
 }
 
-if running_linux; then
+# if running_linux; then
   eval `keychain --eval --quiet --quick --agents ssh`
   function add_all_ssh_keys()
   {
@@ -25,7 +25,7 @@ if running_linux; then
     fi
 }
 alias ssh="(ssh-add -l > /dev/null || add_all_ssh_keys ) && ssh"
-fi
+# fi
 
 bindkey -v
 bindkey ' ' magic-space
@@ -107,9 +107,9 @@ READNULLCMD=less
 REPORTTIME=7
 
 export GOROOT=`go env GOROOT`
-typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:$PATH:$GOROOT/bin"
+typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:/usr/local/sbin:$PATH:$GOROOT/bin"
 
-export LESS="-RXei"
+export LESS="-RXeiF"
 export EDITOR="vim"
 
 
@@ -122,7 +122,6 @@ fi
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
-chruby 2.1.0 # Set a default
 
 alias les="less"
 alias	ll="ls -thor"
@@ -148,6 +147,7 @@ alias bil="bi --local"
 alias bu="b update"
 alias be="b exec"
 alias binit="bi && b package --all && echo 'vendor/ruby' >> .gitignore"
+alias igrep="grep -i"
 
 t ()
 {

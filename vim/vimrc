@@ -34,6 +34,7 @@ Bundle 'Solarized'
 Bundle 'scrooloose/nerdcommenter'
 " Bundle 'nono/vim-handlebars'
 Bundle 'tpope/vim-dispatch'
+Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-markdown'
 Bundle 'Syntastic'
 Bundle 'fatih/vim-go'
@@ -188,7 +189,7 @@ autocmd FileType go setlocal tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab no
 autocmd FileType qf set nowinfixheight
 autocmd BufRead Capfile,Gemfile,Rakefile,Guardfile,Procfile,Vagrantfile,Berksfile set ft=ruby
 
-autocmd FileType ruby map ,, :Dispatch bundle exec rspec spec<cr>
+" autocmd FileType ruby map ,, :Dispatch bundle exec rspec spec<cr>
 autocmd FileType go map ,, :Dispatch go run %<cr>
 autocmd FileType clojure map ,, :Dispatch lein test<cr>
 
