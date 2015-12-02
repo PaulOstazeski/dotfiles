@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/Users/paulostazeski/projects/dumptruck/app/lib/dt_hive/client'
-let g:netrw_dirhist_2='/Users/paulostazeski/projects/dumptruck/app/lib/dt_hive'
-let g:netrw_dirhist_3='/Users/paulostazeski/projects/dumptruck/app/lib'
-let g:netrw_dirhist_4='/Users/paulostazeski/projects/dumptruck/app/lib/dt_hive'
-let g:netrw_dirhist_5='/Users/paulostazeski/projects/dumptruck/config/deploy/iad'
-let g:netrw_dirhist_6='/Users/paulostazeski/projects/dumptruck'
-let g:netrw_dirhist_7='/Users/paulostazeski/projects/dumptruck/app/lib/notifications'
