@@ -1,0 +1,1 @@
+pmset -g batt | awk '/charg/ {print $4,$2}' | tr -d ";"
