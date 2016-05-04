@@ -440,8 +440,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "DELETE",
-                    "label": "DEL"
+                    "key": "FUN1",
+                    "label": "\u01921"
                 }
             }
         },
@@ -453,8 +453,8 @@
             "h": 8,
             "layers": {
                 "0": {
-                    "key": "BACKSPACE",
-                    "label": "BKSP"
+                    "key": "ESCAPE",
+                    "label": "ESC"
                 }
             }
         },
@@ -466,8 +466,8 @@
             "h": 8,
             "layers": {
                 "0": {
-                    "key": "FUN1",
-                    "label": "\u01921"
+                    "key": "BACKSPACE",
+                    "label": "BKSP"
                 }
             }
         },
@@ -505,8 +505,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "LCK3",
-                    "label": "LOCK-3"
+                    "key": "PREV LAYER",
+                    "label": "PREV-\u0192"
                 }
             }
         },
@@ -518,8 +518,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "LCK2",
-                    "label": "LOCK-2"
+                    "key": "NEXT LAYER",
+                    "label": "NEXT-\u0192"
                 }
             }
         },
@@ -531,8 +531,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "LCK1",
-                    "label": "LOCK-1"
+                    "key": "PRINTSCREEN",
+                    "label": "PRSC"
                 }
             }
         },
@@ -873,6 +873,14 @@
             "h": 4,
             "layers": {
                 "0": {
+                    "key": "CONS:PAUSEPLAY",
+                    "label": "PL\/PS"
+                },
+                "1": {
+                    "key": "#:flashMode()",
+                    "label": "FLASH"
+                },
+                "2": {
                     "key": "#:flashMode()",
                     "label": "FLASH"
                 },
@@ -998,8 +1006,8 @@
             "h": 4,
             "layers": {
                 "0": {
-                    "key": "FUN2",
-                    "label": "\u01922"
+                    "key": "FUN1",
+                    "label": "\u01921"
                 }
             }
         },

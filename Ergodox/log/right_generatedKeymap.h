@@ -38,6 +38,7 @@
 //      MDErgo1-Blank-1.kll
 //      /srv/KiiConf/controller/kll/layouts/lcdFuncMap.kll
 //      -p
+//      MDErgo1-Blank-2.kll
 //      /srv/KiiConf/controller/kll/layouts/lcdFuncMap.kll
 //      -p
 //      MDErgo1-Blank-3.kll
@@ -84,6 +85,8 @@
 //     lcdFuncMap
 //       /srv/KiiConf/controller/kll/layouts/lcdFuncMap.kll
 //    Layer 2
+//     MDErgo1
+//       MDErgo1-Blank-2.kll
 //     lcdFuncMap
 //       /srv/KiiConf/controller/kll/layouts/lcdFuncMap.kll
 //    Layer 3
@@ -162,13 +165,13 @@ Guide_RM( 11 ) = { 1, 14, KEY_ENTER, 0 };
 Guide_RM( 12 ) = { 1, 14, KEY_LALT, 0 };
 Guide_RM( 13 ) = { 1, 14, KEY_6, 0 };
 Guide_RM( 14 ) = { 1, 14, KEY_DOWN, 0 };
-Guide_RM( 15 ) = { 1, 14, KEY_BACKSPACE, 0 };
+Guide_RM( 15 ) = { 1, 14, KEY_ESC, 0 };
 Guide_RM( 16 ) = { 1, 14, KEY_K, 0 };
-Guide_RM( 17 ) = { 2, 4, 3, 0, 1, 0 };
+Guide_RM( 17 ) = { 2, 5, 1, 1, 0 };
 Guide_RM( 18 ) = { 1, 14, KEY_Q, 0 };
 Guide_RM( 19 ) = { 1, 14, KEY_UP, 0 };
 Guide_RM( 20 ) = { 1, 14, KEY_EQUAL, 0 };
-Guide_RM( 21 ) = { 2, 6, 1, 0, 1, 0 };
+Guide_RM( 21 ) = { 1, 14, KEY_BACKSPACE, 0 };
 Guide_RM( 22 ) = { 1, 14, KEY_R, 0 };
 Guide_RM( 23 ) = { 1, 14, KEY_L, 0 };
 Guide_RM( 24 ) = { 1, 14, KEY_TAB, 0 };
@@ -180,7 +183,7 @@ Guide_RM( 29 ) = { 1, 14, KEY_DELETE, 0 };
 Guide_RM( 30 ) = { 1, 14, KEY_C, 0 };
 Guide_RM( 31 ) = { 1, 14, KEY_RGUI, 0 };
 Guide_RM( 32 ) = { 1, 14, KEY_I, 0 };
-Guide_RM( 33 ) = { 2, 6, 2, 0, 1, 0 };
+Guide_RM( 33 ) = { 2, 6, 1, 0, 1, 0 };
 Guide_RM( 34 ) = { 1, 14, KEY_RIGHT_BRACKET, 0 };
 Guide_RM( 35 ) = { 1, 14, KEY_E, 0 };
 Guide_RM( 36 ) = { 1, 14, KEY_O, 0 };
@@ -205,32 +208,32 @@ Guide_RM( 54 ) = { 1, 14, KEY_1, 0 };
 Guide_RM( 55 ) = { 1, 14, KEY_MINUS, 0 };
 Guide_RM( 56 ) = { 1, 14, KEY_M, 0 };
 Guide_RM( 57 ) = { 1, 8, 234, 0, 0 };
-Guide_RM( 58 ) = { 1, 14, KEY_ESC, 0 };
-Guide_RM( 59 ) = { 1, 9, 0 };
-Guide_RM( 60 ) = { 1, 14, KEY_S, 0 };
-Guide_RM( 61 ) = { 1, 14, KEY_COMMA, 0 };
-Guide_RM( 62 ) = { 1, 14, KEY_7, 0 };
-Guide_RM( 63 ) = { 1, 8, 226, 0, 0 };
-Guide_RM( 64 ) = { 2, 14, KEY_LSHIFT, 14, KEY_0, 0 };
-Guide_RM( 65 ) = { 1, 14, KEY_4, 0 };
-Guide_RM( 66 ) = { 2, 4, 2, 0, 1, 0 };
-Guide_RM( 67 ) = { 1, 14, KEY_8, 0 };
-Guide_RM( 68 ) = { 2, 14, KEY_LSHIFT, 14, KEY_9, 0 };
-Guide_RM( 69 ) = { 1, 14, KEY_RIGHT, 0 };
-Guide_RM( 70 ) = { 1, 14, KEY_LGUI, 0 };
-Guide_RM( 71 ) = { 1, 14, KEY_3, 0 };
-Guide_RM( 72 ) = { 1, 14, KEY_SEMICOLON, 0 };
-Guide_RM( 73 ) = { 2, 4, 1, 0, 1, 0 };
-Guide_RM( 74 ) = { 1, 14, KEY_F9, 0 };
-Guide_RM( 75 ) = { 1, 14, KEY_F6, 0 };
-Guide_RM( 76 ) = { 1, 14, KEY_PAGE_UP, 0 };
-Guide_RM( 77 ) = { 1, 14, KEY_END, 0 };
-Guide_RM( 78 ) = { 1, 14, KEY_HOME, 0 };
-Guide_RM( 79 ) = { 1, 14, KEY_F2, 0 };
-Guide_RM( 80 ) = { 1, 14, KEY_F10, 0 };
-Guide_RM( 81 ) = { 1, 14, KEY_F5, 0 };
-Guide_RM( 82 ) = { 1, 14, KEY_PAGE_DOWN, 0 };
-Guide_RM( 83 ) = { 1, 14, KEY_F1, 0 };
+Guide_RM( 58 ) = { 1, 8, 205, 0, 0 };
+Guide_RM( 59 ) = { 1, 14, KEY_S, 0 };
+Guide_RM( 60 ) = { 1, 14, KEY_COMMA, 0 };
+Guide_RM( 61 ) = { 1, 14, KEY_7, 0 };
+Guide_RM( 62 ) = { 1, 8, 226, 0, 0 };
+Guide_RM( 63 ) = { 2, 14, KEY_LSHIFT, 14, KEY_0, 0 };
+Guide_RM( 64 ) = { 1, 14, KEY_4, 0 };
+Guide_RM( 65 ) = { 2, 5, 0, 1, 0 };
+Guide_RM( 66 ) = { 1, 14, KEY_8, 0 };
+Guide_RM( 67 ) = { 2, 14, KEY_LSHIFT, 14, KEY_9, 0 };
+Guide_RM( 68 ) = { 1, 14, KEY_RIGHT, 0 };
+Guide_RM( 69 ) = { 1, 14, KEY_LGUI, 0 };
+Guide_RM( 70 ) = { 1, 14, KEY_3, 0 };
+Guide_RM( 71 ) = { 1, 14, KEY_SEMICOLON, 0 };
+Guide_RM( 72 ) = { 1, 14, KEY_PRINTSCREEN, 0 };
+Guide_RM( 73 ) = { 1, 14, KEY_F9, 0 };
+Guide_RM( 74 ) = { 1, 14, KEY_F6, 0 };
+Guide_RM( 75 ) = { 1, 14, KEY_PAGE_UP, 0 };
+Guide_RM( 76 ) = { 1, 14, KEY_END, 0 };
+Guide_RM( 77 ) = { 1, 14, KEY_HOME, 0 };
+Guide_RM( 78 ) = { 1, 14, KEY_F2, 0 };
+Guide_RM( 79 ) = { 1, 14, KEY_F10, 0 };
+Guide_RM( 80 ) = { 1, 14, KEY_F5, 0 };
+Guide_RM( 81 ) = { 1, 14, KEY_PAGE_DOWN, 0 };
+Guide_RM( 82 ) = { 1, 14, KEY_F1, 0 };
+Guide_RM( 83 ) = { 1, 9, 0 };
 Guide_RM( 84 ) = { 1, 14, KEY_F7, 0 };
 Guide_RM( 85 ) = { 2, 14, KEY_LSHIFT, 14, KEY_PERIOD, 0 };
 Guide_RM( 86 ) = { 1, 14, KEY_F4, 0 };
@@ -441,16 +444,17 @@ Guide_TM( 86 ) = { 1, 0x00, 0x01, 0x07, 0 };
 Guide_TM( 87 ) = { 1, 0x00, 0x01, 0x30, 0 };
 Guide_TM( 88 ) = { 1, 0x00, 0x01, 0x0D, 0 };
 Guide_TM( 89 ) = { 1, 0x00, 0x01, 0x34, 0 };
-Guide_TM( 90 ) = { 1, 0x00, 0x01, 0x04, 0 };
-Guide_TM( 91 ) = { 1, 0x00, 0x01, 0x1D, 0 };
-Guide_TM( 92 ) = { 1, 0x00, 0x01, 0x31, 0 };
-Guide_TM( 93 ) = { 1, 0x00, 0x01, 0x05, 0 };
-Guide_TM( 94 ) = { 1, 0x00, 0x01, 0x4A, 0 };
-Guide_TM( 95 ) = { 1, 0x00, 0x01, 0x32, 0 };
-Guide_TM( 96 ) = { 1, 0x00, 0x01, 0x1B, 0 };
-Guide_TM( 97 ) = { 1, 0x00, 0x01, 0x48, 0 };
-Guide_TM( 98 ) = { 1, 0x00, 0x01, 0x35, 0 };
-Guide_TM( 99 ) = { 1, 0x00, 0x01, 0x1C, 0 };
+Guide_TM( 90 ) = { 1, 0x00, 0x01, 0x1C, 0 };
+Guide_TM( 91 ) = { 1, 0x00, 0x01, 0x04, 0 };
+Guide_TM( 92 ) = { 1, 0x00, 0x01, 0x1D, 0 };
+Guide_TM( 93 ) = { 1, 0x00, 0x01, 0x31, 0 };
+Guide_TM( 94 ) = { 1, 0x00, 0x01, 0x05, 0 };
+Guide_TM( 95 ) = { 1, 0x00, 0x01, 0x4A, 0 };
+Guide_TM( 96 ) = { 1, 0x00, 0x01, 0x32, 0 };
+Guide_TM( 97 ) = { 1, 0x00, 0x01, 0x1B, 0 };
+Guide_TM( 98 ) = { 1, 0x00, 0x01, 0x48, 0 };
+Guide_TM( 99 ) = { 1, 0x00, 0x01, 0x35, 0 };
+Guide_TM( 100 ) = { 1, 0x00, 0x01, 0x1C, 0 };
 
 
 // -- Trigger Macro List
@@ -495,7 +499,7 @@ const TriggerMacro TriggerMacroList[] = {
 	Define_TM( 35, 34 ),
 	Define_TM( 36, 35 ),
 	Define_TM( 37, 36 ),
-	Define_TM( 38, 29 ),
+	Define_TM( 38, 33 ),
 	Define_TM( 39, 37 ),
 	Define_TM( 40, 38 ),
 	Define_TM( 41, 39 ),
@@ -517,46 +521,47 @@ const TriggerMacro TriggerMacroList[] = {
 	Define_TM( 57, 55 ),
 	Define_TM( 58, 56 ),
 	Define_TM( 59, 57 ),
-	Define_TM( 60, 58 ),
-	Define_TM( 61, 59 ),
-	Define_TM( 62, 60 ),
-	Define_TM( 63, 61 ),
-	Define_TM( 64, 62 ),
-	Define_TM( 65, 63 ),
-	Define_TM( 66, 64 ),
-	Define_TM( 67, 65 ),
-	Define_TM( 68, 66 ),
-	Define_TM( 69, 67 ),
-	Define_TM( 70, 68 ),
-	Define_TM( 71, 69 ),
-	Define_TM( 72, 70 ),
-	Define_TM( 73, 71 ),
-	Define_TM( 74, 72 ),
-	Define_TM( 75, 73 ),
-	Define_TM( 76, 74 ),
+	Define_TM( 60, 15 ),
+	Define_TM( 61, 58 ),
+	Define_TM( 62, 59 ),
+	Define_TM( 63, 60 ),
+	Define_TM( 64, 61 ),
+	Define_TM( 65, 62 ),
+	Define_TM( 66, 63 ),
+	Define_TM( 67, 64 ),
+	Define_TM( 68, 65 ),
+	Define_TM( 69, 66 ),
+	Define_TM( 70, 67 ),
+	Define_TM( 71, 68 ),
+	Define_TM( 72, 69 ),
+	Define_TM( 73, 70 ),
+	Define_TM( 74, 71 ),
+	Define_TM( 75, 72 ),
+	Define_TM( 76, 73 ),
 	Define_TM( 77, 14 ),
-	Define_TM( 78, 75 ),
+	Define_TM( 78, 74 ),
 	Define_TM( 79, 19 ),
-	Define_TM( 80, 69 ),
+	Define_TM( 80, 68 ),
 	Define_TM( 81, 8 ),
-	Define_TM( 82, 76 ),
-	Define_TM( 83, 77 ),
-	Define_TM( 84, 78 ),
-	Define_TM( 85, 79 ),
-	Define_TM( 86, 80 ),
-	Define_TM( 87, 81 ),
-	Define_TM( 88, 82 ),
-	Define_TM( 89, 83 ),
-	Define_TM( 90, 84 ),
-	Define_TM( 91, 85 ),
-	Define_TM( 92, 86 ),
-	Define_TM( 93, 87 ),
-	Define_TM( 94, 88 ),
-	Define_TM( 95, 89 ),
-	Define_TM( 96, 90 ),
-	Define_TM( 97, 91 ),
-	Define_TM( 98, 59 ),
-	Define_TM( 99, 92 ),
+	Define_TM( 82, 75 ),
+	Define_TM( 83, 76 ),
+	Define_TM( 84, 77 ),
+	Define_TM( 85, 78 ),
+	Define_TM( 86, 79 ),
+	Define_TM( 87, 80 ),
+	Define_TM( 88, 81 ),
+	Define_TM( 89, 82 ),
+	Define_TM( 90, 83 ),
+	Define_TM( 91, 84 ),
+	Define_TM( 92, 85 ),
+	Define_TM( 93, 86 ),
+	Define_TM( 94, 87 ),
+	Define_TM( 95, 88 ),
+	Define_TM( 96, 89 ),
+	Define_TM( 97, 90 ),
+	Define_TM( 98, 91 ),
+	Define_TM( 99, 83 ),
+	Define_TM( 100, 92 ),
 };
 
 
@@ -675,8 +680,8 @@ Define_TL( default, 0x59 ) = { 1, 75 };
 // - Partial Layers -
 // Partial Layer 1
 Define_TL( layer1, 0x03 ) = { 1, 78 };
-Define_TL( layer1, 0x04 ) = { 1, 90 };
-Define_TL( layer1, 0x05 ) = { 1, 93 };
+Define_TL( layer1, 0x04 ) = { 1, 91 };
+Define_TL( layer1, 0x05 ) = { 1, 94 };
 Define_TL( layer1, 0x06 ) = { 1, 76 };
 Define_TL( layer1, 0x07 ) = { 1, 86 };
 Define_TL( layer1, 0x08 ) = { 0 };
@@ -699,8 +704,8 @@ Define_TL( layer1, 0x18 ) = { 1, 80 };
 Define_TL( layer1, 0x19 ) = { 0 };
 Define_TL( layer1, 0x1A ) = { 0 };
 Define_TL( layer1, 0x1B ) = { 0 };
-Define_TL( layer1, 0x1C ) = { 0 };
-Define_TL( layer1, 0x1D ) = { 1, 91 };
+Define_TL( layer1, 0x1C ) = { 1, 90 };
+Define_TL( layer1, 0x1D ) = { 1, 92 };
 Define_TL( layer1, 0x1E ) = { 0 };
 Define_TL( layer1, 0x1F ) = { 0 };
 Define_TL( layer1, 0x20 ) = { 0 };
@@ -720,8 +725,8 @@ Define_TL( layer1, 0x2D ) = { 0 };
 Define_TL( layer1, 0x2E ) = { 0 };
 Define_TL( layer1, 0x2F ) = { 0 };
 Define_TL( layer1, 0x30 ) = { 1, 87 };
-Define_TL( layer1, 0x31 ) = { 1, 92 };
-Define_TL( layer1, 0x32 ) = { 1, 95 };
+Define_TL( layer1, 0x31 ) = { 1, 93 };
+Define_TL( layer1, 0x32 ) = { 1, 96 };
 Define_TL( layer1, 0x33 ) = { 1, 85 };
 Define_TL( layer1, 0x34 ) = { 1, 89 };
 Define_TL( layer1, 0x35 ) = { 0 };
@@ -745,14 +750,14 @@ Define_TL( layer1, 0x46 ) = { 0 };
 Define_TL( layer1, 0x47 ) = { 0 };
 Define_TL( layer1, 0x48 ) = { 0 };
 Define_TL( layer1, 0x49 ) = { 0 };
-Define_TL( layer1, 0x4A ) = { 1, 94 };
+Define_TL( layer1, 0x4A ) = { 1, 95 };
 
 // Partial Layer 2
-Define_TL( layer2, 0x00 ) = { 0 };
+Define_TL( layer2, 0x1C ) = { 1, 90 };
 
 // Partial Layer 3
-Define_TL( layer3, 0x1B ) = { 1, 96 };
-Define_TL( layer3, 0x1C ) = { 1, 99 };
+Define_TL( layer3, 0x1B ) = { 1, 97 };
+Define_TL( layer3, 0x1C ) = { 1, 100 };
 Define_TL( layer3, 0x1D ) = { 0 };
 Define_TL( layer3, 0x1E ) = { 0 };
 Define_TL( layer3, 0x1F ) = { 0 };
@@ -777,7 +782,7 @@ Define_TL( layer3, 0x31 ) = { 0 };
 Define_TL( layer3, 0x32 ) = { 0 };
 Define_TL( layer3, 0x33 ) = { 0 };
 Define_TL( layer3, 0x34 ) = { 0 };
-Define_TL( layer3, 0x35 ) = { 1, 98 };
+Define_TL( layer3, 0x35 ) = { 1, 99 };
 Define_TL( layer3, 0x36 ) = { 0 };
 Define_TL( layer3, 0x37 ) = { 0 };
 Define_TL( layer3, 0x38 ) = { 0 };
@@ -796,7 +801,7 @@ Define_TL( layer3, 0x44 ) = { 0 };
 Define_TL( layer3, 0x45 ) = { 0 };
 Define_TL( layer3, 0x46 ) = { 0 };
 Define_TL( layer3, 0x47 ) = { 0 };
-Define_TL( layer3, 0x48 ) = { 1, 97 };
+Define_TL( layer3, 0x48 ) = { 1, 98 };
 
 
 // -- ScanCode Offset Map
@@ -836,7 +841,7 @@ layer1_tl_0x03, layer1_tl_0x04, layer1_tl_0x05, layer1_tl_0x06, layer1_tl_0x07, 
 
 // Partial Layer 2
 const nat_ptr_t *layer2_scanMap[] = {
-layer2_tl_0x00
+layer2_tl_0x1C
 };
 
 // Partial Layer 3
@@ -855,7 +860,7 @@ layer3_tl_0x1B, layer3_tl_0x1C, layer3_tl_0x1D, layer3_tl_0x1E, layer3_tl_0x1F, 
 const Layer LayerIndex[] = {
 	Layer_IN( default_scanMap, "D: MDErgo1 + lcdFuncMap", 0x02 ),
 	Layer_IN( layer1_scanMap, "1: MDErgo1 + lcdFuncMap", 0x03 ),
-	Layer_IN( layer2_scanMap, "2: lcdFuncMap", 0x00 ),
+	Layer_IN( layer2_scanMap, "2: MDErgo1 + lcdFuncMap", 0x1C ),
 	Layer_IN( layer3_scanMap, "3: MDErgo1 + lcdFuncMap", 0x1B ),
 };
 

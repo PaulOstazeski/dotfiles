@@ -26,5 +26,6 @@ U"H" : U"LEFT";
 U"J" : U"DOWN";
 U"K" : U"UP";
 U"L" : U"RIGHT";
+U"RCTRL" : flashMode();
 U"FUNCTION7" : '>';
 
