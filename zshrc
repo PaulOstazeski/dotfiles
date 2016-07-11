@@ -7,7 +7,7 @@ zstyle ':completion::complete:*' use-cache 1
 #export TERM=${TERM:/xterm/xterm-256color} #Workaround Terminal/vte bug/argument.
 
 function running_osx() {
-  uname -a | grep -qi darwin 
+  uname -a | grep -qi darwin
 }
 
 function running_linux() {
@@ -88,7 +88,6 @@ setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt hist_reduce_blanks
 setopt hist_verify
-##  ##  setopt ksh_arrays # On Thu 02 Jun 2011 12:20:24 PM EDT this broke tab completion. The effect is that arrays are zero-indexed with ksh_arrays set, and one-indexed without.
 setopt list_packed
 setopt list_rows_first
 setopt null_glob
@@ -147,6 +146,8 @@ alias bu="b update"
 alias be="b exec"
 alias binit="bi && b package --all && echo 'vendor/ruby' >> .gitignore"
 alias igrep="grep -i"
+alias bad="git bisect bad"
+alias good="git bisect good"
 
 t ()
 {
@@ -255,7 +256,3 @@ function man () {
 
 eval "$(fasd --init auto)"
 [[ -s "/Users/postazeski/.gvm/scripts/gvm" ]] && source "/Users/postazeski/.gvm/scripts/gvm"
-
-function update_vmnet6_arp_addresses() { nmap -e vmnet6 -sn "192.168.66.*" >/dev/null 2>/dev/null }
-function vm_ip() { update_vmnet6_arp_addresses &! arp -lai vmnet6 | awk '/de.ad.be.ef/ {print $1;exit}' }
-function connect_vm() { ssh $(vm_ip) }

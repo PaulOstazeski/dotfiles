@@ -1,50 +1,47 @@
 set nocompatible
 filetype off
-set rtp+=$HOME/.vim/bundle/Vundle.vim/
+set rtp+=$HOME/.vim/bundle/vundle/
 call vundle#rc()
 
-Bundle 'Align'
-Bundle 'Colour-Sampler-Pack'
-Bundle 'CSApprox'
-Bundle 'DirDiff.vim'
-Bundle 'ervandew/supertab'
-Bundle 'fugitive.vim'
-Bundle 'gmarik/vundle'
-" Bundle 'jQuery'
-Bundle 'matchit.zip'
-" Bundle 'pangloss/vim-javascript'
-Bundle 'ruby-matchit'
-Bundle 'ScrollColors'
-Bundle 'Tabular'
-Bundle 'textobj-rubyblock'
-Bundle 'textobj-user'
-Bundle 'tpope/vim-rails.git'
-Bundle 'tpope/vim-eunuch.git'
-Bundle 'vim-coffee-script'
-" Bundle 'DrawIt'
-" Bundle 'Markdown'
-" Bundle 'jgdavey/vim-turbux'
-" Bundle 'jgdavey/tslime.vim'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-speeddating'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-haml'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-Bundle 'Solarized'
-Bundle 'scrooloose/nerdcommenter'
-" Bundle 'nono/vim-handlebars'
-Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-markdown'
-Bundle 'Syntastic'
-Bundle 'fatih/vim-go'
-Bundle 'jiangmiao/auto-pairs'
-Bundle 'guns/vim-clojure-static'
-Bundle 'tpope/vim-fireplace'
-" Plugin 'paredit.vim'
+Plugin 'Align'
+Plugin 'Colour-Sampler-Pack'
+Plugin 'CSApprox'
+Plugin 'DirDiff.vim'
+Plugin 'ervandew/supertab'
+Plugin 'fugitive.vim'
+Plugin 'gmarik/vundle'
+Plugin 'matchit.zip'
+Plugin 'pangloss/vim-javascript'
+Plugin 'ruby-matchit'
+Plugin 'ScrollColors'
+Plugin 'Tabular'
+Plugin 'Tabmerge'
+" Plugin 'textobj-rubyblock'
+" Plugin 'textobj-user'
+Plugin 'tpope/vim-rails.git'
+Plugin 'tpope/vim-eunuch.git'
+Plugin 'vim-coffee-script'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-speeddating'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-haml'
+Plugin 'tpope/vim-repeat'
+Plugin 'surround.vim'
+Plugin 'Solarized'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-markdown'
+Plugin 'Syntastic'
+Plugin 'fatih/vim-go'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'guns/vim-clojure-static'
+Plugin 'tpope/vim-fireplace'
 Plugin 'rainbow_parentheses.vim'
+Plugin 'vim-ruby/vim-ruby'
 Plugin 'jpalardy/vim-slime'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'keith/tmux.vim'
 let g:slime_target = "tmux"
 
 " Syntastic settings
@@ -60,6 +57,9 @@ syntax enable
 let g:solarized_termtrans=1
 set bg=dark
 colorscheme solarized
+
+" Remove trailing spaces on file save
+autocmd BufWritePre     * :%s/\s\+$//e
 
 "filetype on		    " fast
 "filetype off		    " fast
@@ -122,10 +122,13 @@ set exrc
 " Make per-folder .vimrc files safer
 set secure
 set tabpagemax=99
+set directory=~/.vim/swap
+
+" set autochdir " Do I really want this? Paul Ostazeski on Thu Mar 10 10:56:44 2016
 
 cabbrev h vertical help
-iabbrev DD <C-r>=strftime("%c")<CR> 
-map DD I== <C-r>=strftime("%c")<CR> ==<CR>
+iabbrev DD <C-r>=strftime("Paul Ostazeski on %c")<CR>
+map DD I== <C-r>=strftime("Paul Ostazeski on %c")<CR> ==<CR>
 cnoremap %% <C-r>=expand('%:h').'/'<CR>
 map <Leader>e :edit %%
 
@@ -180,7 +183,6 @@ let g:rails_projections = {
       \ }
       \}
 
-autocmd BufEnter *.hbs.* setlocal ft=handlebars
 autocmd FileType gitcommit setlocal spell spelllang=en spellfile=~/.vim/spell/en.utf-8.add
 " autocmd BufWritePost Gemfile !bundle install
 
