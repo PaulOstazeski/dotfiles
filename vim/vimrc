@@ -123,6 +123,7 @@ set exrc
 set secure
 set tabpagemax=99
 set directory=~/.vim/swap
+set cryptmethod=blowfish2
 
 " set autochdir " Do I really want this? Paul Ostazeski on Thu Mar 10 10:56:44 2016
 
