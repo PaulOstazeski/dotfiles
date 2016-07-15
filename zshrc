@@ -14,16 +14,16 @@ function running_linux() {
   uname -a | grep -qi linux
 }
 
-eval `keychain --eval --quiet --quick --agents ssh`
-function add_all_ssh_keys()
-{
-  ssh-add $(grep -lR PRIVATE ~/.ssh)
-  if [ -n "${TMUX+x}" ]; then
-    tmux set-environment SSH_AGENT_PID $SSH_AGENT_PID
-    tmux set-environment SSH_AUTH_SOCK $SSH_AUTH_SOCK
-  fi
-}
-alias ssh="(ssh-add -l > /dev/null || add_all_ssh_keys ) && ssh"
+# eval `keychain --eval --quiet --quick --agents ssh`
+# function add_all_ssh_keys()
+# {
+#   ssh-add $(grep -lR PRIVATE ~/.ssh)
+#   if [ -n "${TMUX+x}" ]; then
+#     tmux set-environment SSH_AGENT_PID $SSH_AGENT_PID
+#     tmux set-environment SSH_AUTH_SOCK $SSH_AUTH_SOCK
+#   fi
+# }
+# alias ssh="(ssh-add -l > /dev/null || add_all_ssh_keys ) && ssh"
 
 bindkey -v
 bindkey ' ' magic-space
