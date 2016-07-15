@@ -103,7 +103,7 @@ HISTFILE="${HOME}/.zsh_history"
 READNULLCMD=less
 REPORTTIME=7
 
-typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:/usr/local/sbin:$PATH"
+typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:/usr/local/sbin:$PATH:${HOME}/.dotfiles/bin"
 
 export LESS="-RXeiF"
 export EDITOR="vim"
