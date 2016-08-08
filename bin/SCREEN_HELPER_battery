@@ -1,5 +1,5 @@
 #!/bin/sh
 case $(uname -s) in
-  Linux) acpi -b | awk '/Charging/ {print "+"$4,$5} /Discharging/ {print "-"$4,$5}' | tr -d "," ;;
+  Linux) acpi -b | awk '/Charging/ {print "+"$4,$5} /Discharging/ {print "-"$4,$5} /Unknown/ {print $NF}' | tr -d "," ;;
   *) pmset -g batt | awk '/charg/ {print $4,$2}' | tr -d ";" ;;
 esac
