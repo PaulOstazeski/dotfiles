@@ -82,6 +82,7 @@ map - <C-X>
 " map ,, :!rm -f spec/cassettes/*<cr>\|:Dispatch bundle exec rspec spec acceptance -t wip<cr>
 cmap w!! w !sudo tee %
 command T tabedit README
+command SqueezeBlankLines :%s/^\_s\+\n/\r/g
 
 inoremap <C-F> <C-X><C-F>
 inoremap <C-L> <C-X><C-L>
