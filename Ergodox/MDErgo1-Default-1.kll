@@ -26,6 +26,8 @@ U"U" : U"EQUALS";
 U"I" : '+';
 U"O" : U"MINUS";
 U"P" : '_';
+U"H" : U"QUOTE";
+U"J" : U"SEMICOLON";
 U"N" : '^';
 U"M" : '&';
 U"COMMA" : '*';
