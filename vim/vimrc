@@ -42,6 +42,7 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'jpalardy/vim-slime'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'keith/tmux.vim'
+Plugin 'elixir-lang/vim-elixir'
 let g:slime_target = "tmux"
 
 " Syntastic settings
