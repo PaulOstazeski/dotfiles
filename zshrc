@@ -74,8 +74,8 @@ function down-line-or-beginning-search {                       #
 zle -N up-line-or-beginning-search                             #
 zle -N down-line-or-beginning-search                           #
                                                                #
-bindkey "OA" up-line-or-beginning-search                     #
-bindkey "OB" down-line-or-beginning-search                   #
+bindkey '[A' up-line-or-beginning-search                     #
+bindkey '[B' down-line-or-beginning-search                   #
 ### http://www.zsh.org/mla/users/2002/msg00138.html ############
 
 setopt always_to_end
