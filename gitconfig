@@ -41,6 +41,7 @@
   ci              = commit
   ap              = add -p
   cp              = cherry-pick
+	fp = push --force-with-lease
 [push]
   default            = current
 [github]
