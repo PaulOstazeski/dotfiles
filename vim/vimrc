@@ -1,95 +1,51 @@
 set nocompatible
-filetype off
-set rtp+=$HOME/.vim/bundle/vundle/
-call vundle#rc()
+" To install plug, run
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" Plugins will be downloaded under the specified directory.
+call plug#begin('~/.vim/plugged')
 
-Plugin 'Align'
-Plugin 'Colour-Sampler-Pack'
-Plugin 'CSApprox'
-Plugin 'DirDiff.vim'
-Plugin 'ervandew/supertab'
-Plugin 'fugitive.vim'
-Plugin 'gmarik/vundle'
-Plugin 'matchit.zip'
-Plugin 'pangloss/vim-javascript'
-Plugin 'ruby-matchit'
-Plugin 'ScrollColors'
-Plugin 'Tabular'
-Plugin 'Tabmerge'
-" Plugin 'textobj-rubyblock'
-" Plugin 'textobj-user'
-Plugin 'tpope/vim-rails.git'
-Plugin 'tpope/vim-eunuch.git'
-Plugin 'vim-coffee-script'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-speeddating'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-haml'
-Plugin 'tpope/vim-repeat'
-Plugin 'surround.vim'
-Plugin 'Solarized'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-markdown'
-Plugin 'Syntastic'
-Plugin 'fatih/vim-go'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'guns/vim-clojure-static'
-Plugin 'tpope/vim-fireplace'
-Plugin 'rainbow_parentheses.vim'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'jpalardy/vim-slime'
-Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'keith/tmux.vim'
-Plugin 'elixir-lang/vim-elixir'
-let g:slime_target = "tmux"
+" Declare the list of plugins.
+" A decent-looking colorscheme
+Plug 'junegunn/seoul256.vim'
+" Consider removing - align text by columns - can a code formatter do this for
+" me?
+Plug 'Align'
+" Async linting. Needs per-language tools (rubocop,eslint) installed outside of vim. Better than syntastic b/c async.
+Plug 'w0rp/ale'
+" Rails navigation
+Plug 'tpope/vim-rails'
+" Run shell commands like :Remove or :Mkdir
+Plug 'tpope/vim-eunuch'
+" Run git commands like :Gblame or :Gread
+Plug 'tpope/vim-fugitive'
+" Make increment/decrement work on dates
+Plug 'tpope/vim-speeddating'
+" Recursive directory diff. Rarely needed but indespensible.
+Plug 'DirDiff.vim'
+" Supertab? YouCompleteMe?
+" Async code completion #TODO: Look into semantic completion, that sounds
+" awesome
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" I thought this was part of vim? Mapping for 'surround' actions, like cs"'
+" for 'change the surrounding double-quotes to single-quotes
+Plug 'tpope/vim-surround'
+" Switching among camel/snake/kebob casing
+Plug 'tpope/vim-abolish'
+" gcc to toggle comments
+Plug 'tpope/vim-commentary'
+" 'Better' javascript indentation/syntax?
+Plug 'pangloss/vim-javascript'
+" Make '.' repeat more complicated actions
+Plug 'tpope/vim-repeat'
+" Tmux syntax
+Plug 'keith/tmux.vim'
 
-" Syntastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_auto_jump = 1
-" end Syntastic settings
+" List ends here. Plugins become visible to Vim after this call.
+call plug#end()
 
-filetype plugin indent on
-
-syntax enable
-let g:solarized_termtrans=1
-set bg=dark
-colorscheme solarized
-
+colorscheme seoul256-light
 " Remove trailing spaces on file save
 autocmd BufWritePre     * :%s/\s\+$//e
-
-"filetype on		    " fast
-"filetype off		    " fast
-"filetype plugin on	    " slow
-"filetype plugin off	    " fast
-"filetype indent on	    " fast
-"filetype indent off	    " fast
-"filetype plugin indent on  " slow
-"filetype plugin indent off " fast
-
-" 'filetype plugin on' is slow when on a jruby project, possibly b/c jruby
-" starts slow as shit.
-
-map QQ :q<CR>
-map WW :wall<CR>
-map NN :next<CR>
-map PP :previous<CR>
-map + <C-A>
-map - <C-X>
-" map ,, :!rm -f spec/cassettes/*<cr>\|:Dispatch bundle exec rspec spec acceptance -t wip<cr>
-cmap w!! w !sudo tee %
-command T tabedit README
-command SqueezeBlankLines :%s/^\_s\+\n/\r/g
-
-inoremap <C-F> <C-X><C-F>
-inoremap <C-L> <C-X><C-L>
-
-nnoremap <CR> :nohlsearch<cr>
-
 set autoindent
 set autoread
 set autowrite
@@ -126,31 +82,46 @@ set secure
 set tabpagemax=99
 set directory=~/.vim/swap
 set cryptmethod=blowfish2
+set equalalways
+let mapleader = ','
 
-" set autochdir " Do I really want this? Paul Ostazeski on Thu Mar 10 10:56:44 2016
+autocmd FileType gitcommit setlocal spell spelllang=en spellfile=~/.vim/spell/en.utf-8.add
+"Fix cron on OSX
+"Avoids error 'crontab: temp file must be edited in place'
+autocmd FileType crontab set backupskip=/tmp/*,/private/tmp/*
+" re-indent xml
+map <F3> :%s/>\s*</>\r</g<CR>:set ft=xml<CR>gg=G
+" re-indent json
+map <F4> :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>gg=G
+" Apply rspec focus tag
+map <Leader>f :s/ \<do\>$/, focus: true do/<cr><esc>:noh<cr>
+map <Leader>g ?focus: true<cr><esc>:s/, focus: true//<cr><esc>:noh<cr>
 
+" Make git commits show a preview pane
+autocmd! BufReadPost gitcommit
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
+autocmd FileType gitcommit setlocal spell spelllang=en_us
+autocmd FileType gitcommit DiffGitCached | wincmd L
+let @d="debugger"
+
+" Mappings
+map QQ :q<CR>
+map WW :wall<CR>
+map NN :next<CR>
+map PP :previous<CR>
+map + <C-A>
+map - <C-X>
+inoremap <C-F> <C-X><C-F>
+inoremap <C-L> <C-X><C-L>
+inoremap jk <esc>
+nnoremap <CR> :nohlsearch<cr>
 cabbrev h vertical help
 iabbrev DD <C-r>=strftime("Paul Ostazeski on %c")<CR>
 map DD I== <C-r>=strftime("Paul Ostazeski on %c")<CR> ==<CR>
-cnoremap %% <C-r>=expand('%:h').'/'<CR>
-map <Leader>e :edit %%
 
-" The following gives you a quick "git blame" on the hightlighted code
-vmap gl :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
-
-" `. - Goto last edit.
-
-" autocmd User Rails Rnavcommand uploader app/uploaders -suffix=_uploader.rb -default=model()
-" autocmd User Rails Rnavcommand steps spec/acceptance/step_definitions -suffix=_steps.rb -default=web
-" autocmd User Rails Rnavcommand blueprint spec/blueprints -suffix=_blueprint.rb -default=model()
-" autocmd User Rails Rnavcommand factory spec/factories -suffix=_factory.rb -default=model()
-" autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
-" autocmd User Rails Rnavcommand feature spec/acceptance -suffix=.feature -default=env
-" autocmd User Rails Rnavcommand acceptance acceptance -suffix=_spec.rb -default=model()
-" autocmd User Rails Rnavcommand support spec/support features/support -default=env
-" autocmd User Rails Rnavcommand report app/reports
-" autocmd User Rails Rnavcommand import app/importers
-" autocmd User Rails Rnavcommand export app/exporters
+" Allovue-specific rails projections
 let g:rails_projections = {
       \  "acceptance/*_spec.rb": {
       \    "command": "acceptance"
@@ -186,58 +157,3 @@ let g:rails_projections = {
       \ }
       \}
 
-autocmd FileType gitcommit setlocal spell spelllang=en spellfile=~/.vim/spell/en.utf-8.add
-" autocmd BufWritePost Gemfile !bundle install
-
-autocmd FileType go setlocal tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab nolist
-
-" autocmd FileType qf cla
-autocmd FileType qf set nowinfixheight
-autocmd BufRead Capfile,Gemfile,Rakefile,Guardfile,Procfile,Vagrantfile,Berksfile set ft=ruby
-
-" autocmd FileType ruby map ,, :Dispatch bundle exec rspec spec<cr>
-autocmd FileType go map ,, :Dispatch go run %<cr>
-autocmd FileType clojure map ,, :Dispatch lein test<cr>
-
-
-"Fix cron on OSX
-"Avoids error 'crontab: temp file must be edited in place'
-autocmd FileType crontab set backupskip=/tmp/*,/private/tmp/*
-
-autocmd FileType go set tabstop=2|set shiftwidth=2|set noexpandtab|set nolist
-
-function! ResCur()
-  if line("'\"") <= line("$")
-    normal! g`"
-    return 1
-  endif
-endfunction
-
-augroup resCur
-  autocmd!
-  autocmd BufWinEnter * call ResCur()
-augroup END
-
-set equalalways
-let mapleader = ','
-
-map <Leader>. :Tabularize/
-
-let g:turbux_command_prefix = 'bundle exec'
-
-let @r="require 'pry';binding.pry"
-" re-indent xml
-map <F3> :%s/>\s*</>\r</g<CR>:set ft=xml<CR>gg=G
-" re-indent json
-map <F4> :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>gg=G
-
-" Apply rspec focus tag
-map <Leader>f :s/ \<do\>$/, :focus do/<cr><esc>:noh<cr>
-map <Leader>g ?:focus<cr><esc>:s/, :focus//<cr><esc>:noh<cr>
-
-autocmd! BufReadPost gitcommit
-  \ if line("'\"") > 0 && line("'\"") <= line("$") |
-  \   exe "normal g`\"" |
-  \ endif
-autocmd FileType gitcommit setlocal spell spelllang=en_us
-autocmd FileType gitcommit DiffGitCached | wincmd L
