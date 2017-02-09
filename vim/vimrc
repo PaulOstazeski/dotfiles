@@ -39,6 +39,10 @@ Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-repeat'
 " Tmux syntax
 Plug 'keith/tmux.vim'
+" Automatically reformat code. Requires external tools.
+Plug 'Chiel92/vim-autoformat'
+" Filetype detection for ember-style .hbs files
+Plug 'mustache/vim-mustache-handlebars'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
@@ -46,6 +50,9 @@ call plug#end()
 colorscheme seoul256-light
 " Remove trailing spaces on file save
 autocmd BufWritePre     * :%s/\s\+$//e
+" Run code files through external formatter
+" autocmd BufWrite * :Autoformat
+
 set autoindent
 set autoread
 set autowrite
@@ -99,9 +106,9 @@ map <Leader>g ?focus: true<cr><esc>:s/, focus: true//<cr><esc>:noh<cr>
 
 " Make git commits show a preview pane
 autocmd! BufReadPost gitcommit
-  \ if line("'\"") > 0 && line("'\"") <= line("$") |
-  \   exe "normal g`\"" |
-  \ endif
+      \ if line("'\"") > 0 && line("'\"") <= line("$") |
+      \   exe "normal g`\"" |
+      \ endif
 autocmd FileType gitcommit setlocal spell spelllang=en_us
 autocmd FileType gitcommit DiffGitCached | wincmd L
 let @d="debugger"
@@ -117,7 +124,7 @@ inoremap <C-F> <C-X><C-F>
 inoremap <C-L> <C-X><C-L>
 inoremap jk <esc>
 nnoremap <CR> :nohlsearch<cr>
-cabbrev h vertical help
+" cabbrev h vertical help
 iabbrev DD <C-r>=strftime("Paul Ostazeski on %c")<CR>
 map DD I== <C-r>=strftime("Paul Ostazeski on %c")<CR> ==<CR>
 
