@@ -43,6 +43,8 @@ Plug 'keith/tmux.vim'
 Plug 'Chiel92/vim-autoformat'
 " Filetype detection for ember-style .hbs files
 Plug 'mustache/vim-mustache-handlebars'
+" Table formatting
+Plug 'dhruvasagar/vim-table-mode'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
