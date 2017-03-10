@@ -10,7 +10,8 @@ Plug 'junegunn/seoul256.vim'
 " Consider removing - align text by columns - can a code formatter do this for
 " me?
 Plug 'Align'
-" Async linting. Needs per-language tools (rubocop,eslint) installed outside of vim. Better than syntastic b/c async.
+" Async linting.
+" Requires per-language tools (rubocop,eslint) installed outside of vim. Better than syntastic b/c async.
 Plug 'w0rp/ale'
 " Rails navigation
 Plug 'tpope/vim-rails'
@@ -39,13 +40,16 @@ Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-repeat'
 " Tmux syntax
 Plug 'keith/tmux.vim'
-" Automatically reformat code. Requires external tools.
+" Automatically reformat code.
+" Requires external tools (per-language: rubocop, jshint)
 Plug 'Chiel92/vim-autoformat'
 " Filetype detection for ember-style .hbs files
 Plug 'mustache/vim-mustache-handlebars'
 " Table formatting
 Plug 'dhruvasagar/vim-table-mode'
-
+" Mappings for evaluating 'ruby-code #=> ' inline.
+" Requires external tool (rcodetools gem)
+Plug 't9md/vim-ruby-xmpfilter'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
@@ -166,3 +170,10 @@ let g:rails_projections = {
       \ }
       \}
 
+autocmd FileType ruby nmap <buffer> <Leader>m <Plug>(xmpfilter-mark)
+autocmd FileType ruby xmap <buffer> <Leader>m <Plug>(xmpfilter-mark)
+autocmd FileType ruby imap <buffer> <Leader>m <Plug>(xmpfilter-mark)
+
+autocmd FileType ruby nmap <buffer> <Leader>n <Plug>(xmpfilter-run)
+autocmd FileType ruby xmap <buffer> <Leader>n <Plug>(xmpfilter-run)
+autocmd FileType ruby imap <buffer> <Leader>n <Plug>(xmpfilter-run)
