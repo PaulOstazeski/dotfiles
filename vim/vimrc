@@ -47,13 +47,15 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'mustache/vim-mustache-handlebars'
 " Table formatting
 Plug 'dhruvasagar/vim-table-mode'
+" Colorscheme
+Plug 'sjl/badwolf'
 " Mappings for evaluating 'ruby-code #=> ' inline.
 " Requires external tool (rcodetools gem)
 Plug 't9md/vim-ruby-xmpfilter'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
-colorscheme seoul256-light
+colorscheme badwolf
 " Remove trailing spaces on file save
 autocmd BufWritePre     * :%s/\s\+$//e
 " Run code files through external formatter
@@ -86,6 +88,7 @@ set softtabstop=2
 set splitright
 set switchbuf=useopen
 set virtualedit=block
+set wildmenu
 " set number
 set list
 " Turn on per-folder .vimrc sourcing
