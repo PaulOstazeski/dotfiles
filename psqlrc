@@ -1,10 +1,12 @@
 \timing
 \x auto
-\pset null 'NULL'
+\pset null '∅'
 \pset linestyle unicode
 \pset border 2
 \pset format wrapped
 \pset pager off
+\pset unicode_border_linestyle double
+\pset unicode_header_linestyle double
 
 /* Stolen from https://github.com/heroku/heroku-pg-extras/blob/master/lib/heroku/command/pg.rb */
 /* calculates your cache hit rate (effective databases are at 99% and up) */
