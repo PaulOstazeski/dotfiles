@@ -6,6 +6,8 @@ zstyle ':completion::complete:*' use-cache 1
 
 #export TERM=${TERM:/xterm/xterm-256color} #Workaround Terminal/vte bug/argument.
 
+fpath=(~/.zsh/completion $fpath)
+
 function running_osx() {
   uname -a | grep -qi darwin
 }
