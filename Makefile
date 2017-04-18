@@ -16,3 +16,7 @@ dotfiles:
 		ln -sfn $$file $(HOME)/$$f; \
 	done
 
+vim_setup:
+	mkdir -p $(HOME)/.vim_swap
+	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	vim -c PlugInstall -c q

@@ -94,7 +94,7 @@ set exrc
 " Make per-folder .vimrc files safer
 set secure
 set tabpagemax=99
-set directory=~/.vim/swap
+set directory=~/.vim_swap
 set cryptmethod=blowfish2
 set equalalways
 let mapleader = ','
