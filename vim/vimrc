@@ -47,15 +47,13 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'mustache/vim-mustache-handlebars'
 " Table formatting
 Plug 'dhruvasagar/vim-table-mode'
-" Colorscheme
-Plug 'sjl/badwolf'
 " Mappings for evaluating 'ruby-code #=> ' inline.
 " Requires external tool (rcodetools gem)
 Plug 't9md/vim-ruby-xmpfilter'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
-colorscheme badwolf
+colorscheme seoul256-light
 " Remove trailing spaces on file save
 autocmd BufWritePre     * :%s/\s\+$//e
 " Run code files through external formatter
@@ -136,6 +134,9 @@ nnoremap <CR> :nohlsearch<cr>
 " cabbrev h vertical help
 iabbrev DD <C-r>=strftime("Paul Ostazeski on %c")<CR>
 map DD I== <C-r>=strftime("Paul Ostazeski on %c")<CR> ==<CR>
+" Select the last set of inserted characters
+nnoremap gG `[v`]
+nnoremap <Leader>s :mksession<CR>
 
 " Allovue-specific rails projections
 let g:rails_projections = {
