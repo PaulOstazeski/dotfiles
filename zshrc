@@ -151,36 +151,6 @@ alias igrep="grep -i"
 alias bad="git bisect bad"
 alias good="git bisect good"
 
-t ()
-{
-  tmux new-window "$*"
-}
-
-ts ()
-{
-  tmux split-window "$*"
-}
-
-tv ()
-{
-  tmux split-window -h "$*"
-}
-
-tsd ()
-{
-  tmux split-window -d "$*"
-}
-
-tvd ()
-{
-  tmux split-window -h -d "$*"
-}
-
-tn ()
-{
-  tmux -2 new -s $(basename $(pwd))
-}
-
 didi ()
 {
    (history 1 | grep -v "didi" | grep "$*") || (grep "$*" $HISTFILE | grep -v didi)
