@@ -20,3 +20,5 @@ vim_setup:
 	mkdir -p $(HOME)/.vim_swap
 	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	vim -c PlugInstall -c q
+	echo "You need to install rubocop, jshint, and eslint yourself for async linters"
+	echo "You need to install rcodetools for eval-ing '#=>' inline
