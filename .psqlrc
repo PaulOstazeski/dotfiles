@@ -5,7 +5,7 @@
 \pset border 2
 \pset format wrapped
 \pset pager off
-\pset unicode_border_linestyle double
+\pset unicode_border_linestyle single
 \pset unicode_header_linestyle double
 
 /* Stolen from https://github.com/heroku/heroku-pg-extras/blob/master/lib/heroku/command/pg.rb */
