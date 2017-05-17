@@ -33,7 +33,10 @@ Plug 'tpope/vim-surround'
 " Switching among camel/snake/kebob casing
 Plug 'tpope/vim-abolish'
 " gcc to toggle comments
-Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-commentary'
+Plug 'tomtom/tcomment_vim'
+" Select and replace multiple words like sublime does
+Plug 'terryma/vim-multiple-cursors'
 " 'Better' javascript indentation/syntax?
 Plug 'pangloss/vim-javascript'
 " Make '.' repeat more complicated actions
@@ -50,10 +53,12 @@ Plug 'dhruvasagar/vim-table-mode'
 " Mappings for evaluating 'ruby-code #=> ' inline.
 " Requires external tool (rcodetools gem)
 Plug 't9md/vim-ruby-xmpfilter'
+" This gives me the "extract assignment into let-binding" for rspec
+Plug 'ecomba/vim-ruby-refactoring'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
-colorscheme seoul256-light
+colorscheme seoul256
 " Remove trailing spaces on file save
 autocmd BufWritePre     * :%s/\s\+$//e
 " Run code files through external formatter
