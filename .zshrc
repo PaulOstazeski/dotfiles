@@ -176,12 +176,6 @@ cleanup-git-branches ()
   git br --merged $branch | grep -wv $branch | xargs git br -d
 }
 
-function chpwd()
-{
-   clear
-   ls
-}
-
 function fix_tmux_env()
 {
   # Sometimes my tmux sessions get muddled. I SHOULD find and correct the
