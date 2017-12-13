@@ -105,7 +105,7 @@ HISTFILE="${HOME}/.zsh_history"
 READNULLCMD=less
 REPORTTIME=7
 
-typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:/usr/local/sbin:$PATH"
+typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:/usr/local/sbin:$PATH:./node_modules/.bin"
 
 export LESS="-RXeiF"
 export EDITOR="vim"
@@ -121,6 +121,9 @@ fi
 if [[ -d /usr/local/opt/chruby/share/chruby ]]; then
   source /usr/local/opt/chruby/share/chruby/chruby.sh
   source /usr/local/opt/chruby/share/chruby/auto.sh
+elif [[ -d /usr/share/chruby ]]; then
+  source /usr/share/chruby/chruby.sh
+  source /usr/share/chruby/auto.sh
 fi
 
 alias les="less"
@@ -159,6 +162,18 @@ didi ()
 order ()
 {
    sort $1 | uniq -c | sort -n
+}
+
+edit_matches ()
+{
+  lgrep=$(fc -l -1 | sed 's/ *\([0-9]*\)\(.*\) grep \(.*\)/\2 grep -l \3/')
+  vim $(echo $(eval $lgrep))
+}
+
+cleanup-git-branches ()
+{
+  local branch=$(git current-branch)
+  git br --merged $branch | grep -wv $branch | xargs git br -d
 }
 
 function chpwd()
@@ -227,4 +242,4 @@ function man () {
 }
 
 eval "$(fasd --init auto)"
-[[ -s "/Users/postazeski/.gvm/scripts/gvm" ]] && source "/Users/postazeski/.gvm/scripts/gvm"
+# source /usr/share/nvm/init-nvm.sh
