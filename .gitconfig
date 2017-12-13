@@ -25,9 +25,11 @@
 [merge]
   conflictstyle = diff3
   tool          = vimdiff
+[mergetool]
+  writeToTemp = true
 [alias]
   lg             = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)%an%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  l              = log --patch-with-stat --word-diff
+  l              = log --patch-with-stat #--word-diff
   co             = checkout
   st             = status -sb
   br             = branch
@@ -35,8 +37,10 @@
   ap             = add -p
   cp             = cherry-pick
   fp             = push --force-with-lease
-  df             = diff --word-diff
+  word-diff      = diff --word-diff
+  diff-word      = diff --word-diff
   current-branch = rev-parse --abbrev-ref HEAD
+	ss = show --word-diff
 [push]
   default            = current
 [github]
