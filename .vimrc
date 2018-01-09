@@ -82,8 +82,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 " toggle comments
 Plug 'tpope/vim-commentary'
-" Auto-close
-Plug 'cohama/lexima.vim'
 " Ember navigation
 Plug 'andrewradev/ember_tools.vim'
 " Select and replace multiple words like sublime does
@@ -172,9 +170,8 @@ autocmd FileType crontab set backupskip=/tmp/*,/private/tmp/*
 map <F3> :%s/>\s*</>\r</g<CR>:set ft=xml<CR>gg=G
 " re-indent json
 map <F4> :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>gg=G
-" Apply rspec focus tag
-map <Leader>f ?\<do\><cr><esc>:s/ \<do\>$/, focus: true do/<cr><esc>:noh<cr>
-map <Leader>g ?focus: true<cr><esc>:s/, focus: true//<cr><esc>:noh<cr>
+map <Leader>f ?^\s*\<it\\|describe\\|context\><cr>^if<esc>:nohlsearch<cr>
+map <Leader>g ?^\s*\<fit\\|fdescribe\\|fcontext\><cr>^x:nohlsearch<cr>
 
 " Make git commits show a preview pane
 autocmd! BufReadPost gitcommit
