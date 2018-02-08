@@ -153,6 +153,7 @@ alias binit="bi && b package --all && echo 'vendor/ruby' >> .gitignore"
 alias igrep="grep -i"
 alias bad="git bisect bad"
 alias good="git bisect good"
+alias bcps="curl bcps.org| hxnormalize -x | hxselect '#status' | w3m -dump -T 'text/html'"
 
 didi ()
 {
