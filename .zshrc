@@ -153,7 +153,14 @@ alias binit="bi && b package --all && echo 'vendor/ruby' >> .gitignore"
 alias igrep="grep -i"
 alias bad="git bisect bad"
 alias good="git bisect good"
-alias bcps="curl bcps.org| hxnormalize -x | hxselect '#status' | w3m -dump -T 'text/html'"
+alias bcps="curl -s bcps.org| hxnormalize -x | hxselect '#status' | w3m -dump -T 'text/html'"
+alias v="vim"
+alias close-prod-tunnel='ssh -S ~/prod_tunnel -O exit zuul'
+alias close-staging-tunnel='ssh -S ~/staging_tunnel -O exit zuul'
+alias open-prod-tunnel='2>/dev/null close-staging-tunnel; ssh -M -S ~/prod_tunnel -NfC -L 8080:balance-production.crkdkhrqjrq1.us-east-1.rds.amazonaws.com:5432 -o IdentitiesOnly=yes zuul'
+alias open-staging-tunnel='2>/dev/null close-prod-tunnel; ssh -M -S ~/staging_tunnel -NfC -L 8080:balance-staging.crkdkhrqjrq1.us-east-1.rds.amazonaws.com:5432 -o IdentitiesOnly=yes zuul'
+alias running-qa-boxes="aws ec2 describe-instances --filters \"Name=tag:role,Values=api-qa\" \"Name=instance-state-name,Values=running\" --query \"Reservations[*].Instances[*].Tags[?Key=='Name'].Value\" --output text"
+alias ssh="TERM=xterm-256color ssh"
 
 didi ()
 {
@@ -168,13 +175,25 @@ order ()
 edit_matches ()
 {
   lgrep=$(fc -l -1 | sed 's/ *\([0-9]*\)\(.*\) grep \(.*\)/\2 grep -l \3/')
-  vim $(echo $(eval $lgrep))
+  vim $(echo $(eval $lgrep)) $*
 }
 
 cleanup-git-branches ()
 {
+  # This is for merge-commit-creating workflows
   local branch=$(git current-branch)
   git br --merged $branch | grep -wv $branch | xargs git br -d
+}
+
+cleanup-squashed-github-branches ()
+{
+  local DELETE
+  git br | grep -v -e '*' -e development -e master -e websockets | while read local_branch
+  do
+    DELETE='n'
+    git br -r | grep -q ${local_branch} && echo "${local_branch} exists" || read -q "DELETE?Remove ${local_branch}? "
+    [[ ${DELETE} =~ ^[Yy]$ ]] && git br -D ${local_branch}
+  done
 }
 
 function fix_tmux_env()
@@ -204,6 +223,10 @@ function unix2dos()
 function tarbomb()
 {
   [[ $(tar tf "$1" | sed 's,^\./,,' | awk -F/ '{print $1}' | sort | uniq | wc -l) -eq 1 ]] && echo "OK" || echo 'Tarbomb!'
+}
+
+function get-tweet() {
+  curl -sL $1 | hxnormalize -x | hxselect 'title' | html2text
 }
 
 # The following lines were added by compinstall
@@ -236,5 +259,50 @@ function man () {
           man "$@"
 }
 
+function grab_dump_for() {
+  client=$1
+  file=$(aws s3 ls --human-readable s3://allovue-db-backups/$client | awk 'END { print $NF}')
+  aws s3 cp s3://allovue-db-backups/${file} .
+}
+
+function prs_since_by() {
+  git shortlog --since=$1 --author=$2 | awk '/^ /' | awk '/\(#[0-9]+)$/ {print $NF"|"$0}' | sort -t"|" -k1 | awk -F"|" '{print $NF }'
+}
+
+function draft-release-notes () {
+  git log $(git describe --tags --abbrev=0)..HEAD --oneline | awk '{$1="###";print $0,"\n"}'
+}
+
+autoload -U bashcompinit
+bashcompinit
+complete -C aws_completer aws
+
 eval "$(fasd --init auto)"
-# source /usr/share/nvm/init-nvm.sh
+# curl https://icanhazdadjoke.com
+
+PATH="/home/paul/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/paul/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/paul/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/paul/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/paul/perl5"; export PERL_MM_OPT;
+source /usr/share/nvm/init-nvm.sh
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc

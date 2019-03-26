@@ -24,9 +24,10 @@
   excludesfile       = ~/.gitignore
 [merge]
   conflictstyle = diff3
-  tool          = vimdiff
+  tool = diffconflicts
 [mergetool]
   writeToTemp = true
+  keepBackup = false
 [alias]
   lg             = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)%an%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   l              = log --patch-with-stat #--word-diff
@@ -50,8 +51,17 @@
   templatedir     = ~/.git_template
 [commit]
   template        = ~/.git_template/message
-[remote "origin"]
-  prune = true
-  fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+	gpgsign = true
+; [remote "origin"]
+;   prune = true
+;   fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
 [status]
   showUntrackedFiles = all
+[fetch]
+  prune = true
+  pruneTags = true
+[help]
+  autocorrect = 20
+[mergetool "diffconflicts"]
+  cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
+  trustExitCode = true
