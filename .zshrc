@@ -16,7 +16,7 @@ function running_linux() {
   uname -a | grep -qi linux
 }
 
-eval `keychain --eval --quiet --quick --agents ssh`
+eval `keychain --eval --quiet --quick`
 # function add_all_ssh_keys()
 # {
 #   ssh-add $(grep -lR PRIVATE ~/.ssh)

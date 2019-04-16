@@ -136,14 +136,13 @@ let g:ansible_unindent_after_newline = 1
 " Requires per-language tools (rubocop,eslint) installed outside of vim. Better than syntastic b/c async.
 Plug 'w0rp/ale'
 nnoremap mm :ALENextWrap<CR>
-let g:ale_linters = {'ruby': ['rubocop']}
-let g:ale_fixers = {'ruby': ['rubocop']}
-let g:ale_linters = {'javascript': ['eslint']}
-let g:ale_fixers = {'javascript': ['eslint']}
+let g:ale_linters = {'ruby': ['rubocop'], 'javascript': ['eslint'], 'elixir': []}
+let g:ale_fixers = {'ruby': ['rubocop'], 'javascript': ['eslint'], 'elixir': ['mix_format']}
 " let g:ale_linters = {'ruby': ['standardrb']}
 " let g:ale_fixers = {'ruby': ['standardrb']}
 " let g:ale_linters = {'javascript': ['standard']}
 " let g:ale_fixers = {'javascript': ['standard']}
+let g:ale_fixerst = { 'ruby': ['rubocop'] }
 let g:ale_fix_on_save = 1
 Plug 'tmsvg/pear-tree'
 " Intelligent auto-close that doesn't break '.'
@@ -158,6 +157,8 @@ vmap <expr> <S-UP>    DVB_Drag('up')
 vmap <expr>  D        DVB_Duplicate()
 " File navigation
 Plug 'mhinz/vim-tree'
+" Tag updating
+Plug 'ludovicchabant/vim-gutentags'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
