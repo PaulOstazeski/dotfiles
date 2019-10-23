@@ -30,6 +30,8 @@ Plug 'vim-scripts/DirDiff.vim'
 Plug 'tpope/vim-surround'
 " toggle comments
 Plug 'tpope/vim-commentary'
+" Run tests on save
+Plug 'tpope/vim-dispatch'
 " Ember navigation
 Plug 'andrewradev/ember_tools.vim'
 let g:ember_tools_extract_behaviour = 'component-dir'
@@ -43,6 +45,8 @@ Plug 'ecomba/vim-ruby-refactoring'
 Plug 'jpalardy/vim-slime'
 " Set vim-slime to use tmux instead of screen
 let g:slime_target = "tmux"
+" Visual select and then mark two chunks via :Linediff
+Plug 'AndrewRadev/linediff.vim'
 " Wiki-wiki-what?
 Plug 'vimwiki/vimwiki'
 " Syntax highlighting for ansible files
@@ -60,6 +64,8 @@ let g:ale_fix_on_save = 1
 " " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
+au Filetype elixir let b:dispatch = 'mix test'
+
 au FileType sql setl formatprg=pg_format\ -f\ 1\ -u\ 1\ -
 colorscheme seoul256
 highlight Comment cterm=italic
@@ -74,12 +80,14 @@ set backspace=indent,eol,start
 set confirm
 set encoding=utf8
 set expandtab
+set foldcolumn=3
 set history=10000
 set hlsearch
 set ignorecase
 set smartcase
 set incsearch
 set lazyredraw
+set laststatus=2 " Always show filename
 set listchars=tab:>-,trail:…
 set nowrap
 set pastetoggle=<F5>
@@ -93,6 +101,7 @@ set sidescroll=8
 set softtabstop=2
 set splitright
 set switchbuf=useopen
+set ttyfast " 2019-06-04 08:53:12 AM Tue https://aonemd.github.io/blog/minimal-vim
 set virtualedit=block
 set wildmenu
 set list
@@ -109,8 +118,8 @@ set equalalways
 let mapleader = ','
 
 "" Make 81st column stand out
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%81v', 100)
+" highlight ColorColumn ctermbg=magenta
+" call matchadd('ColorColumn', '\%81v', 100)
 
 "Auto open-close quickfix wIndow (make/grep/etc)
 autocmd QuickFixCmdPost [^l]* nested cwindow
@@ -140,7 +149,7 @@ autocmd FileType gitcommit DiffGitCached | wincmd L
 
 " Mappings
 map QQ :q<CR>
-map WW :wall<CR>
+map WW :wall\|:Dispatch<CR>
 map NN :next<CR>
 map PP :previous<CR>
 map VV :w\| :so ~/.vimrc\| :PlugInstall<CR>
