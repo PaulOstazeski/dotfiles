@@ -194,16 +194,18 @@ psql-qa() {
 }
 
 psql-staging() {
+  local tenant="${1:-public}"
   local port_number=$(unused-port-number)
   open-tunnel staging $port_number
-  env PGDATABASE=balance_foo PGHOST=localhost PGUSER=balance_rails PGPORT=${port_number} psql
+  env PGDATABASE=balance_foo PGHOST=localhost PGUSER=balance_rails PGPORT=${port_number} PGOPTIONS=--search_path="${tenant},shared_extensions" psql
   close-tunnel $port_number
 }
 
 psql-production() {
+  local tenant="${1:-public}"
   local port_number=$(unused-port-number)
   open-tunnel production $port_number
-  env PGDATABASE=balance_production PGHOST=localhost PGUSER=balance_rails PGPORT=${port_number} psql
+  env PGDATABASE=balance_production PGHOST=localhost PGUSER=balance_rails PGPORT=${port_number} PGOPTIONS=--search_path="${tenant},shared_extensions" psql
   close-tunnel $port_number
 }
 
