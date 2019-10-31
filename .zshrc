@@ -1,7 +1,9 @@
+export CHANGELOG_GITHUB_TOKEN=ba921fcdb9d8bd93abd7365fd81fbc548952ea50
+
 autoload -Uz promptinit zmv colors
 colors
 PROMPT="%(2j.%j jobs are running .%(1j.%j job is running .))%# "
-promptinit && prompt bart red cyan green yellow
+promptinit && prompt bart cyan green yellow red
 zstyle ':completion::complete:*' use-cache 1
 
 #export TERM=${TERM:/xterm/xterm-256color} #Workaround Terminal/vte bug/argument.
@@ -110,6 +112,7 @@ typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/
 export LESS="-RXeiF"
 export EDITOR="vim"
 
+export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.apw"
 
 if running_osx; then
   export LSCOLORS=ExfxcxdxbxExExabagacad
@@ -155,12 +158,54 @@ alias bad="git bisect bad"
 alias good="git bisect good"
 alias bcps="curl -s bcps.org| hxnormalize -x | hxselect '#status' | w3m -dump -T 'text/html'"
 alias v="vim"
-alias close-prod-tunnel='ssh -S ~/prod_tunnel -O exit zuul'
-alias close-staging-tunnel='ssh -S ~/staging_tunnel -O exit zuul'
-alias open-prod-tunnel='2>/dev/null close-staging-tunnel; ssh -M -S ~/prod_tunnel -NfC -L 8080:balance-production.crkdkhrqjrq1.us-east-1.rds.amazonaws.com:5432 -o IdentitiesOnly=yes zuul'
-alias open-staging-tunnel='2>/dev/null close-prod-tunnel; ssh -M -S ~/staging_tunnel -NfC -L 8080:balance-staging.crkdkhrqjrq1.us-east-1.rds.amazonaws.com:5432 -o IdentitiesOnly=yes zuul'
 alias running-qa-boxes="aws ec2 describe-instances --filters \"Name=tag:role,Values=api-qa\" \"Name=instance-state-name,Values=running\" --query \"Reservations[*].Instances[*].Tags[?Key=='Name'].Value\" --output text"
 alias ssh="TERM=xterm-256color ssh"
+
+unused-port-number() {
+  ruby -e 'require "socket"; puts Addrinfo.tcp("", 0).bind {|s| s.local_address.ip_port }'
+}
+
+open-tunnel() {
+  local env="$1"
+  local port_number="$2"
+  case $env in
+    staging|qa)
+      ssh -M -S /tmp/tunnel_${port_number} -NfC -L ${port_number}:balance-staging.crkdkhrqjrq1.us-east-1.rds.amazonaws.com:5432 -o IdentitiesOnly=yes zuul
+      ;;
+    production)
+      ssh -M -S /tmp/tunnel_${port_number} -NfC -L ${port_number}:balance-production.crkdkhrqjrq1.us-east-1.rds.amazonaws.com:5432 -o IdentitiesOnly=yes zuul
+      ;;
+    *)
+      ;;
+  esac
+}
+
+close-tunnel() {
+  local port_number="$1"
+  ssh -S /tmp/tunnel_${port_number} -O exit zuul
+}
+
+psql-qa() {
+  local pr_number=$1
+  local port_number=$(unused-port-number)
+  open-tunnel qa $port_number
+  env PGDATABASE=qa_${pr_number} PGHOST=localhost PGUSER=balance_rails PGPORT=${port_number} PGOPTIONS=--search_path="qa_${pr_number},shared_extensions" psql
+  close-tunnel $port_number
+}
+
+psql-staging() {
+  local port_number=$(unused-port-number)
+  open-tunnel staging $port_number
+  env PGDATABASE=balance_foo PGHOST=localhost PGUSER=balance_rails PGPORT=${port_number} psql
+  close-tunnel $port_number
+}
+
+psql-production() {
+  local port_number=$(unused-port-number)
+  open-tunnel production $port_number
+  env PGDATABASE=balance_production PGHOST=localhost PGUSER=balance_rails PGPORT=${port_number} psql
+  close-tunnel $port_number
+}
 
 didi ()
 {

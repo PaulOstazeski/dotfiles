@@ -1,16 +1,20 @@
 set encoding=utf-8
 set nocompatible
-go
+
 "" To install plug, run
 "" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "" Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 
 " " Declare the list of plugins.
+" Replace/delete word in multiple places, iteratively
+Plug 'konfekt/vim-select-replace'
 " All languages, dynamically loaded?
 Plug 'sheerun/vim-polyglot'
 " A decent-looking colorscheme
 Plug 'junegunn/seoul256.vim'
+Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
 " Any-project navigation like vim-rails
 Plug 'tpope/vim-projectionist'
 " Rails navigation
@@ -49,6 +53,7 @@ let g:slime_target = "tmux"
 Plug 'AndrewRadev/linediff.vim'
 " Wiki-wiki-what?
 Plug 'vimwiki/vimwiki'
+let g:vimwiki_list = [{'syntax': 'markdown'}]
 " Syntax highlighting for ansible files
 Plug 'pearofducks/ansible-vim'
 let g:ansible_unindent_after_newline = 1
@@ -61,6 +66,13 @@ let g:ale_linters = {'ruby': ['rubocop'], 'javascript': ['eslint'], 'elixir': []
 let g:ale_fixers = {'ruby': ['rubocop'], 'javascript': ['eslint'], 'elixir': ['mix_format']}
 let g:ale_fixerst = { 'ruby': ['rubocop'] }
 let g:ale_fix_on_save = 1
+" Swap two words
+Plug 'machakann/vim-swap'
+" Task list, need to play around with learning
+Plug 'aaronbieber/vim-quicktask'
+" PSQL syntax & completion
+Plug 'lifepillar/pgsql.vim'
+let g:sql_type_default = 'pgsql'
 " " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
@@ -68,6 +80,7 @@ au Filetype elixir let b:dispatch = 'mix test'
 
 au FileType sql setl formatprg=pg_format\ -f\ 1\ -u\ 1\ -
 colorscheme seoul256
+set bg=dark
 highlight Comment cterm=italic
 
 " Remove trailing spaces on file save
@@ -129,6 +142,13 @@ autocmd QuickFixCmdPost    l* nested lwindow
 autocmd FileType gitcommit setlocal spell spelllang=en spellfile=~/.vim/spell/en.utf-8.add
 autocmd FileType vimwiki setlocal spell spelllang=en spellfile=~/.vim/spell/en.utf-8.add
 
+" Mapping for storing wiki in git
+function! StoreVimwiki()
+  let cmd = 'cd ~/vimwiki/ && git add --all && git commit -m "autocommit"'
+  let resp = system(cmd)
+endfunction
+autocmd BufWritePost */vimwiki/* call StoreVimwiki()
+
 "Fix cron on OSX
 "Avoids error 'crontab: temp file must be edited in place'
 autocmd FileType crontab set backupskip=/tmp/*,/private/tmp/*
@@ -145,11 +165,12 @@ autocmd! BufReadPost gitcommit
       \   exe "normal g`\"" |
       \ endif
 autocmd FileType gitcommit setlocal spell spelllang=en_us
+" autocmd FileType gitcommit colorscheme nord
 autocmd FileType gitcommit DiffGitCached | wincmd L
 
 " Mappings
 map QQ :q<CR>
-map WW :wall\|:Dispatch<CR>
+map WW :wall<CR>
 map NN :next<CR>
 map PP :previous<CR>
 map VV :w\| :so ~/.vimrc\| :PlugInstall<CR>
@@ -162,5 +183,15 @@ inoremap <C-L> <C-X><C-L>
 nnoremap <CR> :nohlsearch<cr>
 cabbrev h vertical help
 iabbrev DD <C-r>=strftime("%F %r %a")<CR>
+iab <expr> tds strftime("%R")
+
 " Select the last set of inserted characters
 nnoremap gG `[v`]
+
+" let g:netrw_localrmdir='rm -r'
+" let g:netrw_banner = 0
+" let g:netrw_liststyle = 3
+" let g:netrw_browse_split = 0
+
+""toggle netrw on the left side of the editor
+nnoremap <leader>n :Lexplore<CR>

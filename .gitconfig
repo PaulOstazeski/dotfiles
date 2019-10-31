@@ -41,7 +41,8 @@
   word-diff      = diff --word-diff
   diff-word      = diff --word-diff
   current-branch = rev-parse --abbrev-ref HEAD
-	ss = show --word-diff
+  ss             = show --word-diff
+  files-changed  = diff --name-only
 [push]
   default            = current
 [github]
@@ -51,7 +52,7 @@
   templatedir     = ~/.git_template
 [commit]
   template        = ~/.git_template/message
-	gpgsign = true
+  gpgsign = true
 ; [remote "origin"]
 ;   prune = true
 ;   fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
@@ -66,5 +67,5 @@
   cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
   trustExitCode = true
 [diff]
-	noprefix = true
-	indentHeuristic = true
+  noprefix = true
+  indentHeuristic = true
