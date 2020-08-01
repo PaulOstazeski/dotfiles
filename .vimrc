@@ -1,12 +1,12 @@
 set encoding=utf-8
 set nocompatible
 
-"" To install plug, run
-"" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"" Plugins will be downloaded under the specified directory.
+" To install plug, run
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 
-" " Declare the list of plugins.
+" Declare the list of plugins.
 " Replace/delete word in multiple places, iteratively
 Plug 'konfekt/vim-select-replace'
 " All languages, dynamically loaded?
@@ -21,10 +21,14 @@ Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-rails'
 " Better git mergetool
 Plug 'whiteinge/diffconflicts'
+" Run substitution on steriods
+Plug 'tpope/vim-abolish'
 " Run shell commands like :Remove or :Mkdir
 Plug 'tpope/vim-eunuch'
 " Run git commands like :Gblame or :Gread
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+set tags^=./.git/tags;  " Consider removing and fixing ctags config
 " Make increment/decrement work on dates
 Plug 'tpope/vim-speeddating'
 " Recursive directory diff. Rarely needed but indespensible.
@@ -61,9 +65,9 @@ let g:ansible_unindent_after_newline = 1
 " Requires per-language tools (rubocop,eslint) installed outside of vim.
 " Better than syntastic b/c async.
 Plug 'w0rp/ale'
-nnoremap mm :ALENextWrap<CR>
+" nnoremap mm :ALENextWrap<CR>
 let g:ale_linters = {'ruby': ['rubocop'], 'javascript': ['eslint'], 'elixir': []}
-let g:ale_fixers = {'ruby': ['rubocop'], 'javascript': ['eslint'], 'elixir': ['mix_format']}
+let g:ale_fixers = {'ruby': ['rubocop'], 'javascript': ['eslint'], 'elixir': ['mix_format'], 'css': ['stylelint'], 'scss': ['stylelint']}
 let g:ale_fixerst = { 'ruby': ['rubocop'] }
 let g:ale_fix_on_save = 1
 " Swap two words
@@ -73,12 +77,22 @@ Plug 'aaronbieber/vim-quicktask'
 " PSQL syntax & completion
 Plug 'lifepillar/pgsql.vim'
 let g:sql_type_default = 'pgsql'
-" " List ends here. Plugins become visible to Vim after this call.
+" VSCode completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+runtime coc.vimrc
+nmap mm <Plug>(coc-diagnostic-next)
+" Move to closing )]} instead of adding more
+" Plug 'jiangmiao/auto-pairs'
+" Run tests
+Plug 'janko/vim-test'
+" List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
-au Filetype elixir let b:dispatch = 'mix test'
+" au Filetype elixir let b:dispatch = 'mix test'
+" au FileWritePost *.leex exec '!rustywind --write' shellescape(@%, 1)
+" au FileWritePost *.eex exec '!rustywind --write' shellescape(@%, 1)
 
-au FileType sql setl formatprg=pg_format\ -f\ 1\ -u\ 1\ -
+au FileType sql setl formatprg=pg_format\ -b\ -f\ 1\ -u\ 1\ -
 colorscheme seoul256
 set bg=dark
 highlight Comment cterm=italic
@@ -144,7 +158,7 @@ autocmd FileType vimwiki setlocal spell spelllang=en spellfile=~/.vim/spell/en.u
 
 " Mapping for storing wiki in git
 function! StoreVimwiki()
-  let cmd = 'cd ~/vimwiki/ && git add --all && git commit -m "autocommit"'
+  let cmd = 'cd ~/vimwiki/ && git add --all && git commit -m "autocommit" --no-gpg-sign'
   let resp = system(cmd)
 endfunction
 autocmd BufWritePost */vimwiki/* call StoreVimwiki()
@@ -159,6 +173,28 @@ map <F4> :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>gg=G
 map <Leader>f ?\<it\\|describe\\|context\><cr>if<esc>:nohlsearch<cr>
 map <Leader>g ?\<fit\\|fdescribe\\|fcontext\><cr>x:nohlsearch<cr>
 
+map ,p :w<CR><ESC>:%!prettier %<CR>
+
+" Vertical split to file under cursor
+map gv :vertical wincmd f<CR>
+
+" 'Maximize' a split window
+nnoremap <C-W>M <C-W>\| <C-W>_
+nnoremap <C-W>m <C-W>=
+
+" janko/vim-test                  "
+nmap <Leader>tn :TestNearest<CR>  "
+nmap <Leader>tf :TestFile<CR>     "
+nmap <Leader>ts :TestSuite<CR>    "
+nmap <Leader>tl :TestLast<CR>     "
+nmap <Leader>tg :TestVisit<CR>    "
+                                  "
+nmap <Leader>tt :TestLast<CR>     "
+nmap <Leader>, :TestLast<CR>     "
+let test#strategy = "dispatch"    "
+" janko/vim-test                  "
+
+
 " Make git commits show a preview pane
 autocmd! BufReadPost gitcommit
       \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -168,20 +204,25 @@ autocmd FileType gitcommit setlocal spell spelllang=en_us
 " autocmd FileType gitcommit colorscheme nord
 autocmd FileType gitcommit DiffGitCached | wincmd L
 
+inoremap ppp <Bar>>
+
 " Mappings
 map QQ :q<CR>
 map WW :wall<CR>
+" map WW :wall\|:Dispatch<CR>
 map NN :next<CR>
 map PP :previous<CR>
 map VV :w\| :so ~/.vimrc\| :PlugInstall<CR>
+map avd :!ansible-vault decrypt %<CR>
+map ave :!ansible-vault encrypt %<CR>
 " Alias for the sudo write trick, I never remember the exact sequence
 cmap SS w !sudo tee %
 " Good enough tab completion
-imap <Tab> <C-P>
+" imap <Tab> <C-N>
 inoremap <C-F> <C-X><C-F>
 inoremap <C-L> <C-X><C-L>
 nnoremap <CR> :nohlsearch<cr>
-cabbrev h vertical help
+" cabbrev h vertical help
 iabbrev DD <C-r>=strftime("%F %r %a")<CR>
 iab <expr> tds strftime("%R")
 

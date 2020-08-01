@@ -18,7 +18,7 @@ function running_linux() {
   uname -a | grep -qi linux
 }
 
-eval `keychain --eval --quiet --quick`
+eval `keychain --eval --quiet`
 # function add_all_ssh_keys()
 # {
 #   ssh-add $(grep -lR PRIVATE ~/.ssh)
@@ -107,12 +107,21 @@ HISTFILE="${HOME}/.zsh_history"
 READNULLCMD=less
 REPORTTIME=7
 
-typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:/usr/local/sbin:$PATH:./node_modules/.bin"
+typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:/usr/local/sbin:$PATH:./node_modules/.bin:${HOME}/.yarn/bin"
 
 export LESS="-RXeiF"
 export EDITOR="vim"
+export LANG=en_US.utf8
 
 export ANSIBLE_VAULT_PASSWORD_FILE="${HOME}/.apw"
+export ANSIBLE_CONFIG="~/code/allovue/playbooks/ansible.cfg"
+
+# iex history
+export ERL_AFLAGS="-kernel shell_history enabled"
+
+
+# Making weetweet work
+export PYTHONPATH=~/.local/lib/python2.7/site-packages
 
 if running_osx; then
   export LSCOLORS=ExfxcxdxbxExExabagacad
@@ -127,6 +136,9 @@ if [[ -d /usr/local/opt/chruby/share/chruby ]]; then
 elif [[ -d /usr/share/chruby ]]; then
   source /usr/share/chruby/chruby.sh
   source /usr/share/chruby/auto.sh
+else
+  eval "$(rbenv init -)"
+  rbenv shell 2.6.2
 fi
 
 alias les="less"
@@ -146,7 +158,7 @@ if running_linux; then
 fi
 alias e='exec'
 alias gst='git status'
-alias ta='tmux -2 attach || tn'
+alias ta='tmux -u2 attach'
 alias b="bundle"
 alias bi="b install --path vendor"
 alias bil="bi --local"
@@ -160,6 +172,13 @@ alias bcps="curl -s bcps.org| hxnormalize -x | hxselect '#status' | w3m -dump -T
 alias v="vim"
 alias running-qa-boxes="aws ec2 describe-instances --filters \"Name=tag:role,Values=api-qa\" \"Name=instance-state-name,Values=running\" --query \"Reservations[*].Instances[*].Tags[?Key=='Name'].Value\" --output text"
 alias ssh="TERM=xterm-256color ssh"
+
+alias -g newest="*(.om[1])"
+alias -g oldest="*(.Om[1])"
+alias -g smallest="*(.oL[1])"
+alias -g largest="*(.OL[1])"
+
+alias -g carts_prod="-h postgres.render.com -U studious_umbrella_prod_user studious_umbrella_prod"
 
 unused-port-number() {
   ruby -e 'require "socket"; puts Addrinfo.tcp("", 0).bind {|s| s.local_address.ip_port }'
@@ -207,6 +226,14 @@ psql-production() {
   open-tunnel production $port_number
   env PGDATABASE=balance_production PGHOST=localhost PGUSER=balance_rails PGPORT=${port_number} PGOPTIONS=--search_path="${tenant},shared_extensions" psql
   close-tunnel $port_number
+}
+
+psql-development() {
+  env PGDATABASE=allovue_development psql
+}
+
+psql-test() {
+  env PGDATABASE=allovue_test psql
 }
 
 didi ()
@@ -276,24 +303,6 @@ function get-tweet() {
   curl -sL $1 | hxnormalize -x | hxselect 'title' | html2text
 }
 
-# The following lines were added by compinstall
-
-zstyle ':completion:*' completer _expand _complete _ignored
-zstyle ':completion:*' completions '1 '
-zstyle ':completion:*' expand prefix suffix
-zstyle ':completion:*' file-sort modification
-zstyle ':completion:*' glob '1 '
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-suffixes true
-zstyle ':completion:*' squeeze-slashes true
-zstyle ':completion:*' substitute '1 '
-zstyle ':completion:*' verbose true
-zstyle :compinstall filename '/home/paul/.zshrc'
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-
 function man () {
 	env\
           LESS_TERMCAP_mb=$(printf "\e[1;31m")\
@@ -320,35 +329,84 @@ function draft-release-notes () {
   git log $(git describe --tags --abbrev=0)..HEAD --oneline | awk '{$1="###";print $0,"\n"}'
 }
 
+function vacuum_analyze_schema() {
+  # vacuum analyze only the tables in the specified schema
+
+  # postgres info can be supplied by either passing it as parameters to this
+  # function, setting environment variables or a combination of the two
+  local pg_schema="${1:-${PG_SCHEMA}}"
+  local pg_db="${2:-${PG_DB}}"
+  local pg_user="${3:-${PG_USER}}"
+  local pg_host="${4:-${PG_HOST}}"
+  local pg_port="${5:-${PG_PORT}}"
+
+  # extract schema table names from psql output and put them in an array
+  local psql_tbls="select table_name from information_schema.tables where table_schema = '${pg_schema}' order by random();"
+  local table_names=$( echo "${psql_tbls}" | psql -AX -qt -d "${pg_db}" -U "${pg_user}" -h "${pg_host}" -p "${pg_port}" )
+  local tables_array=( $( echo "${table_names}" | tr '\n' ' ' ) )
+
+  # loop through the table names creating and executing a vacuum
+  # command for each one
+  for t in "${tables_array[@]}"; do
+    echo -n "vacuuming ${pg_schema}.${t}: "
+    time psql -AX -qt -d "${pg_db}" -U "${pg_user}" -h "${pg_host}" -p "${pg_port}" -c "vacuum analyze ${pg_schema}.${t};"
+  done
+}
+
 PATH="/home/paul/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/paul/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/paul/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/paul/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/paul/perl5"; export PERL_MM_OPT;
-source /usr/share/nvm/init-nvm.sh
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+##  source /usr/share/nvm/init-nvm.sh
+##  autoload -U add-zsh-hook
+##  load-nvmrc() {
+##    local node_version="$(nvm version)"
+##    local nvmrc_path="$(nvm_find_nvmrc)"
+##
+##    if [ -n "$nvmrc_path" ]; then
+##      local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+##
+##      if [ "$nvmrc_node_version" = "N/A" ]; then
+##        nvm install
+##      elif [ "$nvmrc_node_version" != "$node_version" ]; then
+##        nvm use
+##      fi
+##    elif [ "$node_version" != "$(nvm version default)" ]; then
+##      echo "Reverting to nvm default version"
+##      nvm use default
+##    fi
+##  }
+##  add-zsh-hook chpwd load-nvmrc
+##  load-nvmrc
 
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
+source /home/paul/.asdf/asdf.sh
+
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _ignored
+zstyle ':completion:*' completions '1 '
+zstyle ':completion:*' expand prefix suffix
+zstyle ':completion:*' file-sort modification
+zstyle ':completion:*' glob '1 '
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-suffixes true
+zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion:*' substitute '1 '
+zstyle ':completion:*' verbose true
+zstyle :compinstall filename '/home/paul/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
 
 autoload -U bashcompinit
 bashcompinit
+source ~/.zsh/completion/_elixir_mix
 complete -C aws_completer aws
 
 eval "$(fasd --init auto)"

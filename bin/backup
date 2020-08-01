@@ -1,13 +1,16 @@
-#!/bin/zsh -e
+#!/bin/zsh
 setopt err_exit
+setopt xtrace
 
 ionice -c 3 -p $$
 renice +12  -p $$
 
 #source ~/.keychain/$(hostname)-sh
 keychain
-backup_server=$(iwconfig wlan0 | grep -q "BATCAVE\|WayneManor" && echo 'batman' || echo 'home')
-backup_folder=/media/backup/${HOST}
+# backup_server=$(iwconfig | grep -q "BATCAVE\|WayneManor" && echo 'batman' || echo 'home')
+backup_server=localhost
+# backup_folder=/media/backup/${HOST}
+backup_folder=/media/backup/$(hostname)
 last_complete=${backup_folder}/$(ssh ${backup_server} ls ${backup_folder} | sort -n | tail -n 1)
 dest=${backup_folder}/.incomplete
 
