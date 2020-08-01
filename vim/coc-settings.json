@@ -1,0 +1,5 @@
+{
+  "suggest.autoTrigger": "always",
+  "suggest.noselect": false,
+  "elixir.pathToElixirLS": "~/code/other/elixir-ls/release/language_server.sh"
+}
